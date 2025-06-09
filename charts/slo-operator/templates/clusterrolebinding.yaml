@@ -1,0 +1,17 @@
+{{ if .Values.rbac.create }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "slo-operator.fullname" . }}
+  labels:
+    {{- include "slo-operator.labels" . | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ include "slo-operator.fullname" . }}
+subjects:
+  - apiGroup: ""
+    kind: ServiceAccount
+    name: {{ include "slo-operator.serviceAccountName" . }}
+    namespace: {{ .Release.Namespace }}
+{{ end }}

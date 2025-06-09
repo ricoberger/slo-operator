@@ -1,0 +1,59 @@
+{{ if .Values.rbac.create }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind:  ClusterRole
+metadata:
+  name: {{ include "slo-operator.fullname" . }}
+  labels:
+    {{- include "slo-operator.labels" . | nindent 4 }}
+rules:
+- apiGroups:
+  - monitoring.coreos.com
+  resources:
+  - prometheusrules
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - operator.victoriametrics.com
+  resources:
+  - vmrules
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ricoberger.de
+  resources:
+  - servicelevelobjectives
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ricoberger.de
+  resources:
+  - servicelevelobjectives/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - ricoberger.de
+  resources:
+  - servicelevelobjectives/status
+  verbs:
+  - get
+  - patch
+  - update
+{{ end }}

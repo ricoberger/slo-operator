@@ -1,0 +1,6 @@
+You can find more information about running the SLO Operator on Kubernetes in
+the GitHub repository:
+
+  https://github.com/ricoberger/slo-operator
+
+Thanks for using the SLO Operator!

@@ -1,0 +1,7 @@
+---
+apiVersion: v2
+name: slo-operator
+description: Generate Prometheus SLOs
+type: application
+version: 0.1.0
+appVersion: v0.1.0

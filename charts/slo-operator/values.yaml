@@ -1,0 +1,114 @@
+---
+nameOverride: ""
+fullnameOverride: ""
+
+## The number of Pods, which are created by the Deployment.
+## See: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+##
+replicaCount: 1
+
+## Set the image which should be used for kobs. If the 'tag' is not set the
+## chart app version is used.
+##
+image:
+  repository: ghcr.io/ricoberger/slo-operator
+  pullPolicy: IfNotPresent
+  tag: ""
+
+## Specify a list of image pull secrets, to avoid the DockerHub rate limit or to
+## pull the kobsio/kobs image from a private registry.
+## See: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+##
+imagePullSecrets: []
+
+## Specifies if a ClusterRole and ClusterRoleBinding should be created, so that
+## the operator can create the necessary resources in the cluster.
+## See: https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+##
+rbac:
+  create: true
+
+## Specifies whether a service account should be created.
+## See: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+##
+serviceAccount:
+  create: true
+  automount: true
+  annotations: {}
+  ## The name of the service account to use.
+  ## If not set and create is true, a name is generated using the fullname
+  ## template
+  ##
+  name: ""
+
+## Specifies additional arguments for the container.
+## See: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/
+##
+args: []
+
+## Specify additional labels and annotations for the created Pods.
+## See:
+##   - https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+##   - https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+podAnnotations: {}
+podLabels: {}
+
+## Specify security settings for the created Pods. To set the security settings
+## for the kobs container use the corresponding "securityContext" field.
+## See: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+##
+podSecurityContext: {}
+
+## Specify security settings for the Container. They override settings made at
+## the Pod level via the "podSecurityContext" when there is overlap.
+## See: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+##
+securityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+  privileged: false
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 65534
+  seccompProfile:
+    type: RuntimeDefault
+
+## We usually recommend not to specify default resources and to leave this as a
+## conscious choice for the user. This also increases chances charts run on
+## environments with little resources, such as Minikube. If you do want to
+## specify resources, uncomment the following lines, adjust them as necessary,
+## and remove the curly braces after 'resources:'.
+##
+resources: {}
+
+## Specify additional volumes for the Deployment.
+## See: https://kubernetes.io/docs/concepts/storage/volumes/
+##
+volumes: []
+
+## Specify additional volumeMounts for the container.
+## See: https://kubernetes.io/docs/concepts/storage/volumes/
+##
+volumeMounts: []
+
+## Specify a map of key-value pairs, to assign the Pods to a specific set of nodes.
+## See: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector
+##
+nodeSelector: {}
+
+## Specify the tolerations for the Pods.
+## See: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
+##
+tolerations: []
+
+## Specify a node affinity or inter-pod affinity / anti-affinity for an advanced scheduling of the Pods.
+## See: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity
+##
+affinity: {}
+
+## Topology spread constraints rely on node labels to identify the topology domain(s) that each Node is in.
+## See: https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
+##
+topologySpreadConstraints: []
