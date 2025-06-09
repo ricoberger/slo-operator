@@ -7,10 +7,9 @@ SLO.
 
 > [!WARNING] The SLO Operator is currently **experimental** and should not be
 > used in production environments. The API and the generated Prometheus rules
-> may break in future releases.
->
-> If you are looking for a production ready solution you may want to have a look
-> at [Pyrra](https://github.com/pyrra-dev/pyrra) or
+> may break in future releases. If you are looking for a production ready
+> solution you may want to have a look at
+> [Pyrra](https://github.com/pyrra-dev/pyrra) or
 > [Sloth](https://github.com/slok/sloth).
 
 ## API Specification
