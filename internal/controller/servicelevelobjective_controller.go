@@ -110,6 +110,12 @@ func (r *ServiceLevelObjectiveReconciler) Reconcile(ctx context.Context, req ctr
 	// by converting the PrometheusRule, when the mode is set to
 	// "victoriametrics".
 	if sloOperatorMode == "victoriametrics" {
+		err = r.reconcileVMRule(ctx, serviceLevelObjective, groups)
+		if err != nil {
+			reqLogger.Error(err, "Failed to reconcile VMRule.")
+			r.updateConditions(ctx, serviceLevelObjective, err)
+			return ctrl.Result{}, err
+		}
 	} else {
 		err = r.reconcilePrometheusRule(ctx, serviceLevelObjective, groups)
 		if err != nil {
@@ -312,7 +318,7 @@ func generatePrometheusRuleGroup(slo ricobergerdev1alpha1.SLO, labels map[string
 	sloLabels["id"] = id
 	sloLabels["slo"] = slo.Name
 
-	// Since the objective must be specifed as string in the
+	// Since the objective must be specified as string in the
 	// ServiceLevelObjective resource, we have to parse the value here. We also
 	// divided it by 100 so that it is always in the range of 0 and 1, which
 	// makes the following calculations easier.
@@ -327,27 +333,27 @@ func generatePrometheusRuleGroup(slo ricobergerdev1alpha1.SLO, labels map[string
 	// are added to the generic group.
 	genericRules := []monitoringv1.Rule{
 		{
-			Record: fmt.Sprintf("slo:window"),
+			Record: "slo:window",
 			Expr:   intstr.FromInt(2419200),
 			Labels: sloLabels,
 		},
 		{
-			Record: fmt.Sprintf("slo:objective"),
+			Record: "slo:objective",
 			Expr:   intstr.FromString(strconv.FormatFloat(objective, 'f', -1, 64)),
 			Labels: sloLabels,
 		},
 		{
-			Record: fmt.Sprintf("slo:total"),
+			Record: "slo:total",
 			Expr:   intstr.FromString(strings.ReplaceAll(slo.SLI.TotalQuery, "${window}", "2m")),
 			Labels: sloLabels,
 		},
 		{
-			Record: fmt.Sprintf("slo:errors_total"),
+			Record: "slo:errors_total",
 			Expr:   intstr.FromString(strings.ReplaceAll(fmt.Sprintf("(%s) or vector(0)", slo.SLI.ErrorQuery), "${window}", "2m")),
 			Labels: sloLabels,
 		},
 		{
-			Record: fmt.Sprintf("slo:availability"),
+			Record: "slo:availability",
 			Expr:   intstr.FromString(strings.ReplaceAll(fmt.Sprintf(`1 - ((%s) or vector(0)) / (%s)`, slo.SLI.ErrorQuery, slo.SLI.TotalQuery), "${window}", "28d")),
 			Labels: sloLabels,
 		},
