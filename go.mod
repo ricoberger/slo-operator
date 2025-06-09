@@ -8,8 +8,8 @@ godebug default=go1.23
 
 require (
 	github.com/VictoriaMetrics/operator/api v0.59.1
-	github.com/onsi/ginkgo/v2 v2.22.0
-	github.com/onsi/gomega v1.36.1
+	github.com/onsi/ginkgo/v2 v2.23.4
+	github.com/onsi/gomega v1.36.3
 	github.com/prometheus-operator/prometheus-operator/pkg/apis/monitoring v0.83.0
 	k8s.io/apimachinery v0.33.1
 	k8s.io/client-go v0.33.1
@@ -46,7 +46,7 @@ require (
 	github.com/google/cel-go v0.23.2 // indirect
 	github.com/google/gnostic-models v0.6.9 // indirect
 	github.com/google/go-cmp v0.7.0 // indirect
-	github.com/google/pprof v0.0.0-20241029153458-d1b30febd7db // indirect
+	github.com/google/pprof v0.0.0-20250403155104-27863c87afa6 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.24.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
@@ -87,6 +87,7 @@ require (
 	go.opentelemetry.io/otel/sdk v1.35.0 // indirect
 	go.opentelemetry.io/otel/trace v1.35.0 // indirect
 	go.opentelemetry.io/proto/otlp v1.4.0 // indirect
+	go.uber.org/automaxprocs v1.6.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.27.0 // indirect
 	golang.org/x/exp v0.0.0-20250305212735-054e65f0b394 // indirect
