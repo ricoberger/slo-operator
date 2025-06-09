@@ -48,7 +48,7 @@ spec:
         errorQuery:
       alerting:
         # Disabled can be used to disable the alerting. If the field is set to
-	      # "true" the operator will not generate alerting rules for Prometheus.
+        # "true" the operator will not generate alerting rules for Prometheus.
         disabled:
         # Severities is a list of severities for the alerting rules created by
         # the operator for the absent alert and the burn rate alerts. The list
@@ -58,7 +58,6 @@ spec:
         # The default list which is used, when the field is not set is
         # ["critial", "error", "error", "warning", "warning"]
         severities:
-
 ```
 
 ## Example
