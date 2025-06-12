@@ -45,6 +45,7 @@ type ServiceLevelObjectiveReconciler struct {
 // - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.20.4/pkg/reconcile
 func (r *ServiceLevelObjectiveReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	reqLogger := log.FromContext(ctx)
+	reqLogger.Info("Reconcile ServiceLevelObjective.")
 
 	serviceLevelObjective := &ricobergerdev1alpha1.ServiceLevelObjective{}
 	err := r.Get(ctx, req.NamespacedName, serviceLevelObjective)
