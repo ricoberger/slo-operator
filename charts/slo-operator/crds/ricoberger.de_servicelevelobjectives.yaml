@@ -67,7 +67,7 @@ spec:
                           type: array
                       type: object
                     description:
-                      description: A ddescription for the SLO.
+                      description: A description for the SLO.
                       type: string
                     name:
                       description: Name is the name of the SLO, e.g. "errors", "latency",
