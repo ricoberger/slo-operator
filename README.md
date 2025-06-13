@@ -84,7 +84,7 @@ spec:
           (
             sum(rate(istio_request_duration_milliseconds_count{destination_workload_namespace=~"monitoring",destination_workload=~"grafana"}[${window}]))
             -
-            sum(rate(istio_request_duration_milliseconds_count{destination_workload_namespace=~"monitoring",destination_workload=~"grafana",le="2500"}[${window}]))
+            sum(rate(istio_request_duration_milliseconds_bucket{destination_workload_namespace=~"monitoring",destination_workload=~"grafana",le="2500"}[${window}]))
           )
     - name: up
       objective: "99.9"
