@@ -1,16 +1,26 @@
 # SLO Operator
 
-The SLO Operator is a Kubernetes Operator that can be used to manage SLOs for
-services. The SLO OPerator allows users to define `ServiceLevelObjectives`
-CustomResources, to generate all Prometheus rules and alerts required for an
-SLO.
+The SLO Operator is a Kubernetes Operator that can be used to manage Service
+Level Objectives for services. The SLO Operator allows users to define
+`ServiceLevelObjectives` CustomResources, to generate all Prometheus rules and
+alerts required for an SLO.
 
-> [!WARNING]
-> The SLO Operator is currently **experimental** and should not be used in
-> production environments. The API and the generated Prometheus rules may break
-> in future releases. If you are looking for a production ready solution you may
-> want to have a look at [Pyrra](https://github.com/pyrra-dev/pyrra) or
-> [Sloth](https://github.com/slok/sloth).
+## Installation
+
+The operator can be installed via the Helm chart present in the `charts`
+directory. The chart can be installed with the following command:
+
+```sh
+helm upgrade --install slo-operator oci://ghcr.io/ricoberger/charts/slo-operator --version <VERSION>
+```
+
+## Configuration
+
+By default the operator creates a `PrometheusRule` for the
+[Prometheus Operator](https://prometheus-operator.dev/). If you are using the
+[VictoriaMetrics Operator](https://docs.victoriametrics.com/operator/) a
+`VMRule` can be created by setting the `SLO_OPERATOR_MODE` environment variable
+to `VictoriaMetrics`.
 
 ## API Specification
 
@@ -98,15 +108,6 @@ spec:
           )
 ```
 
-## Installation
-
-The operator can be installed via the Helm chart present in the `charts`
-directory. The chart can be installed with the following command:
-
-```sh
-helm upgrade --install slo-operator oci://ghcr.io/ricoberger/charts/slo-operator --version <VERSION>
-```
-
 ## Development
 
 After modifying the `*_types.go` files in the `api/v1alpha1` folder always run
@@ -140,3 +141,11 @@ kubectl apply -f charts/slo-operator/crds/ricoberger.de_servicelevelobjectives.y
 
 make run
 ```
+
+## Acknowledgement
+
+The SLO Opeartor is heavily inspirred by
+[Pyrra](https://github.com/pyrra-dev/pyrra) and
+[Sloth](https://github.com/slok/sloth). It creates a similar set of recording
+and alerting rules like Pyrra does, but uses a pattern more similar to Sloth to
+define the Service Level Objectives.
