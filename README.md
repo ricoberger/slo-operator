@@ -22,6 +22,12 @@ By default the operator creates a `PrometheusRule` for the
 `VMRule` can be created by setting the `SLO_OPERATOR_MODE` environment variable
 to `VictoriaMetrics`.
 
+An example Grafana dashboard for the SLO Operator can be found in the
+[servicelevelobjective.json](./assets/dashboards/servicelevelobjective.json)
+file.
+
+![Service Level Objective Dashboard](./assets/dashboards/servicelevelobjective.png)
+
 ## API Specification
 
 ```yaml
