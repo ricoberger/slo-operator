@@ -367,6 +367,7 @@ func generatePrometheusRuleGroup(slo ricobergerdev1alpha1.SLO, labels map[string
 		generatePrometheusRuleBurnRateRecording(slo.SLI, sloLabels, "2h"),
 		generatePrometheusRuleBurnRateRecording(slo.SLI, sloLabels, "6h"),
 		generatePrometheusRuleBurnRateRecording(slo.SLI, sloLabels, "1d"),
+		generatePrometheusRuleBurnRateRecording(slo.SLI, sloLabels, "4d"),
 	}
 
 	// If the alerting isn't disabled by the user, we add the alerting rules
