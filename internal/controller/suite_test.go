@@ -9,8 +9,10 @@ import (
 	ricobergerdev1alpha1 "github.com/ricoberger/slo-operator/api/v1alpha1"
 	// +kubebuilder:scaffold:imports
 
+	vmv1beta1 "github.com/VictoriaMetrics/operator/api/operator/v1beta1"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
+	monitoringv1 "github.com/prometheus-operator/prometheus-operator/pkg/apis/monitoring/v1"
 	"k8s.io/client-go/kubernetes/scheme"
 	"k8s.io/client-go/rest"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -39,6 +41,10 @@ var _ = BeforeSuite(func() {
 	ctx, cancel = context.WithCancel(context.TODO())
 
 	var err error
+	err = monitoringv1.AddToScheme(scheme.Scheme)
+	Expect(err).NotTo(HaveOccurred())
+	err = vmv1beta1.AddToScheme(scheme.Scheme)
+	Expect(err).NotTo(HaveOccurred())
 	err = ricobergerdev1alpha1.AddToScheme(scheme.Scheme)
 	Expect(err).NotTo(HaveOccurred())
 
@@ -46,7 +52,10 @@ var _ = BeforeSuite(func() {
 
 	By("Bootstrapping test environment")
 	testEnv = &envtest.Environment{
-		CRDDirectoryPaths:     []string{filepath.Join("..", "..", "charts", "slo-operator", "crds")},
+		CRDDirectoryPaths: []string{
+			filepath.Join("..", "..", "charts", "slo-operator", "crds"),
+			filepath.Join("..", "..", "tests", "crds"),
+		},
 		ErrorIfCRDPathMissing: true,
 	}
 
