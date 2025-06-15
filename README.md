@@ -153,5 +153,5 @@ make run
 The SLO Opeartor is heavily inspirred by
 [Pyrra](https://github.com/pyrra-dev/pyrra) and
 [Sloth](https://github.com/slok/sloth). It creates a similar set of recording
-and alerting rules like Pyrra does, but uses a pattern more similar to Sloth to
+and alerting rules like Pyrra, but uses a pattern more similar to Sloth for
 define the Service Level Objectives.
