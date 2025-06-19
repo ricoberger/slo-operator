@@ -8,7 +8,6 @@ import (
 	vmv1beta1 "github.com/VictoriaMetrics/operator/api/operator/v1beta1"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
-	"github.com/onsi/gomega/format"
 	monitoringv1 "github.com/prometheus-operator/prometheus-operator/pkg/apis/monitoring/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -19,7 +18,6 @@ import (
 
 var _ = Describe("ServiceLevelObjective Controller", func() {
 	Context("When reconciling a resource", func() {
-		format.MaxLength = 10000000
 		ctx := context.Background()
 
 		typeNamespacedName := types.NamespacedName{
