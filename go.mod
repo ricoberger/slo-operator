@@ -1,18 +1,16 @@
 module github.com/ricoberger/slo-operator
 
-go 1.24.3
-
-toolchain go1.24.4
+go 1.24.4
 
 godebug default=go1.23
 
 require (
-	github.com/VictoriaMetrics/operator/api v0.59.1
+	github.com/VictoriaMetrics/operator/api v0.60.2
 	github.com/onsi/ginkgo/v2 v2.23.4
-	github.com/onsi/gomega v1.36.3
+	github.com/onsi/gomega v1.37.0
 	github.com/prometheus-operator/prometheus-operator/pkg/apis/monitoring v0.83.0
-	k8s.io/apimachinery v0.33.1
-	k8s.io/client-go v0.33.1
+	k8s.io/apimachinery v0.33.2
+	k8s.io/client-go v0.33.2
 	sigs.k8s.io/controller-runtime v0.21.0
 )
 
@@ -108,7 +106,7 @@ require (
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
-	k8s.io/api v0.33.1 // indirect
+	k8s.io/api v0.33.2 // indirect
 	k8s.io/apiextensions-apiserver v0.33.1 // indirect
 	k8s.io/apiserver v0.33.1 // indirect
 	k8s.io/component-base v0.33.1 // indirect
