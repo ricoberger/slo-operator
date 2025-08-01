@@ -6,54 +6,73 @@ metadata:
   labels:
     {{- include "slo-operator.labels" . | nindent 4 }}
 rules:
-- apiGroups:
-  - monitoring.coreos.com
-  resources:
-  - prometheusrules
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - operator.victoriametrics.com
-  resources:
-  - vmrules
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - ricoberger.de
-  resources:
-  - servicelevelobjectives
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - ricoberger.de
-  resources:
-  - servicelevelobjectives/finalizers
-  verbs:
-  - update
-- apiGroups:
-  - ricoberger.de
-  resources:
-  - servicelevelobjectives/status
-  verbs:
-  - get
-  - patch
-  - update
+  - apiGroups:
+      - ""
+    resources:
+      - events
+    verbs:
+      - create
+      - patch
+  - apiGroups:
+      - coordination.k8s.io
+    resources:
+      - leases
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - monitoring.coreos.com
+    resources:
+      - prometheusrules
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - operator.victoriametrics.com
+    resources:
+      - vmrules
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - ricoberger.de
+    resources:
+      - servicelevelobjectives
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - ricoberger.de
+    resources:
+      - servicelevelobjectives/finalizers
+    verbs:
+      - update
+  - apiGroups:
+      - ricoberger.de
+    resources:
+      - servicelevelobjectives/status
+    verbs:
+      - get
+      - patch
+      - update
 {{ end }}
