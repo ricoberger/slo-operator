@@ -1,6 +1,6 @@
 version: "2"
 run:
-  allow-parallel-runners: true
+  modules-download-mode: readonly
 linters:
   default: none
   enable:
@@ -13,6 +13,7 @@ linters:
     - ineffassign
     - misspell
     - nakedret
+    - noctx
     - revive
     - staticcheck
     - unconvert
