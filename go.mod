@@ -11,7 +11,7 @@ require (
 	github.com/prometheus-operator/prometheus-operator/pkg/apis/monitoring v0.87.0
 	k8s.io/apimachinery v0.34.2
 	k8s.io/client-go v0.34.2
-	sigs.k8s.io/controller-runtime v0.22.3
+	sigs.k8s.io/controller-runtime v0.22.4
 )
 
 require (
