@@ -11,7 +11,7 @@ COPY internal/controller/ internal/controller/
 
 RUN CGO_ENABLED=0 go build -a -o manager cmd/main.go
 
-FROM alpine:3.22.2
+FROM alpine:3.23.2
 WORKDIR /
 COPY --from=builder /workspace/manager .
 USER 65532:65532
