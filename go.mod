@@ -2,8 +2,6 @@ module github.com/ricoberger/slo-operator
 
 go 1.25.5
 
-godebug default=go1.23
-
 require (
 	github.com/VictoriaMetrics/operator/api v0.66.1
 	github.com/onsi/ginkgo/v2 v2.27.3
