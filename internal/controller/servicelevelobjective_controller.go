@@ -3,6 +3,7 @@ package controller
 import (
 	"context"
 	"fmt"
+	"maps"
 	"os"
 	"strconv"
 	"strings"
@@ -71,9 +72,7 @@ func (r *ServiceLevelObjectiveReconciler) Reconcile(ctx context.Context, req ctr
 	labels := make(map[string]string)
 	if serviceLevelObjective.Labels != nil {
 		for k, v := range serviceLevelObjective.Labels {
-			if strings.HasPrefix(k, "slo-operator.ricoberger.de/") {
-				labels[strings.TrimPrefix(k, "slo-operator.ricoberger.de/")] = v
-			}
+			labels[strings.TrimPrefix(k, "slo-operator.ricoberger.de/")] = v
 		}
 	}
 	labels["name"] = serviceLevelObjective.Name
@@ -270,6 +269,13 @@ func (r *ServiceLevelObjectiveReconciler) reconcileVMRule(ctx context.Context, s
 	return nil
 }
 
+// DurationPointer is a helper function to parse a Duration string into a
+// *Duration.
+func DurationPointer(s string) *monitoringv1.Duration {
+	d := monitoringv1.Duration(s)
+	return &d
+}
+
 // generatePrometheusRuleGroup generates the Prometheus rule group for a SLO in
 // the ServiceLevelObjective resource.
 //
@@ -315,9 +321,7 @@ func generatePrometheusRuleGroup(slo ricobergerdev1alpha1.SLO, labels map[string
 	id := fmt.Sprintf("%s-%s-%s", labels["name"], labels["namespace"], slo.Name)
 
 	sloLabels := make(map[string]string)
-	for k, v := range labels {
-		sloLabels[k] = v
-	}
+	maps.Copy(sloLabels, labels)
 	sloLabels["id"] = id
 	sloLabels["slo"] = slo.Name
 
@@ -397,12 +401,12 @@ func generatePrometheusRuleGroup(slo ricobergerdev1alpha1.SLO, labels map[string
 	return []monitoringv1.RuleGroup{
 		{
 			Name:     fmt.Sprintf("slo-generic-%s", id),
-			Interval: monitoringv1.DurationPointer("30s"),
+			Interval: DurationPointer("30s"),
 			Rules:    genericRules,
 		},
 		{
 			Name:     fmt.Sprintf("slo-errors-%s", id),
-			Interval: monitoringv1.DurationPointer("30s"),
+			Interval: DurationPointer("30s"),
 			Rules:    errorsRules,
 		},
 	}, nil
@@ -413,15 +417,13 @@ func generatePrometheusRuleGroup(slo ricobergerdev1alpha1.SLO, labels map[string
 // metric is absent.
 func generatePrometheusRuleAbsentAlerting(query string, labels map[string]string, severity string) monitoringv1.Rule {
 	alertLabels := make(map[string]string)
-	for k, v := range labels {
-		alertLabels[k] = v
-	}
+	maps.Copy(alertLabels, labels)
 	alertLabels["severity"] = severity
 
 	return monitoringv1.Rule{
 		Alert:  "SLOMetricAbsent",
 		Expr:   intstr.FromString(strings.ReplaceAll(fmt.Sprintf("absent(%s) == 1", query), "${window}", "2m")),
-		For:    monitoringv1.DurationPointer("10m"),
+		For:    DurationPointer("10m"),
 		Labels: alertLabels,
 	}
 }
@@ -434,9 +436,7 @@ func generatePrometheusRuleAbsentAlerting(query string, labels map[string]string
 // total metric and replacing the "${window}" placeholder within the metric.
 func generatePrometheusRuleBurnRateRecording(sli ricobergerdev1alpha1.SLI, labels map[string]string, window string) monitoringv1.Rule {
 	recordLabels := make(map[string]string)
-	for k, v := range labels {
-		recordLabels[k] = v
-	}
+	maps.Copy(recordLabels, labels)
 	recordLabels["window"] = window
 
 	return monitoringv1.Rule{
@@ -453,15 +453,13 @@ func generatePrometheusRuleBurnRateRecording(sli ricobergerdev1alpha1.SLI, label
 // time windows both exceed. The alert is named "SLOErrorBudgetBurn".
 func generatePrometheusRuleBurnRateAlerting(id string, labels map[string]string, burnrate1 string, burnrate2 string, factor string, objective float64, forDuration string, severity string) monitoringv1.Rule {
 	alertLabels := make(map[string]string)
-	for k, v := range labels {
-		alertLabels[k] = v
-	}
+	maps.Copy(alertLabels, labels)
 	alertLabels["severity"] = severity
 
 	return monitoringv1.Rule{
 		Alert:  "SLOErrorBudgetBurn",
 		Expr:   intstr.FromString(fmt.Sprintf(`slo:burnrate{window="%s", id="%s"} > (%s * (1-%s)) and slo:burnrate{window="%s", id="%s"} > (%s * (1-%s))`, burnrate1, id, factor, strconv.FormatFloat(objective, 'f', -1, 64), burnrate2, id, factor, strconv.FormatFloat(objective, 'f', -1, 64))),
-		For:    monitoringv1.DurationPointer(forDuration),
+		For:    DurationPointer(forDuration),
 		Labels: alertLabels,
 	}
 }

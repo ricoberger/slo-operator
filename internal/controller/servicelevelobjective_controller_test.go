@@ -84,7 +84,7 @@ var _ = Describe("ServiceLevelObjective Controller", func() {
 				Groups: []monitoringv1.RuleGroup{
 					{
 						Name:     "slo-generic-test-default-availability",
-						Interval: monitoringv1.DurationPointer("30s"),
+						Interval: DurationPointer("30s"),
 						Rules: []monitoringv1.Rule{
 							{
 								Record: "slo:window",
@@ -144,7 +144,7 @@ var _ = Describe("ServiceLevelObjective Controller", func() {
 							{
 								Alert: "SLOMetricAbsent",
 								Expr:  intstr.FromString(`absent(sum(rate(istio_requests_total{destination_workload_namespace=~"monitoring",destination_workload=~"grafana"}[2m]))) == 1`),
-								For:   monitoringv1.DurationPointer("10m"),
+								For:   DurationPointer("10m"),
 								Labels: map[string]string{
 									"namespace": "default",
 									"name":      "test",
@@ -158,7 +158,7 @@ var _ = Describe("ServiceLevelObjective Controller", func() {
 					},
 					{
 						Name:     "slo-errors-test-default-availability",
-						Interval: monitoringv1.DurationPointer("30s"),
+						Interval: DurationPointer("30s"),
 						Rules: []monitoringv1.Rule{
 							{
 								Record: "slo:burnrate",
@@ -247,7 +247,7 @@ var _ = Describe("ServiceLevelObjective Controller", func() {
 							{
 								Alert: "SLOErrorBudgetBurn",
 								Expr:  intstr.FromString(`slo:burnrate{window="5m", id="test-default-availability"} > (14 * (1-0.9)) and slo:burnrate{window="1h", id="test-default-availability"} > (14 * (1-0.9))`),
-								For:   monitoringv1.DurationPointer("2m"),
+								For:   DurationPointer("2m"),
 								Labels: map[string]string{
 									"namespace": "default",
 									"name":      "test",
@@ -260,7 +260,7 @@ var _ = Describe("ServiceLevelObjective Controller", func() {
 							{
 								Alert: "SLOErrorBudgetBurn",
 								Expr:  intstr.FromString(`slo:burnrate{window="30m", id="test-default-availability"} > (7 * (1-0.9)) and slo:burnrate{window="6h", id="test-default-availability"} > (7 * (1-0.9))`),
-								For:   monitoringv1.DurationPointer("15m"),
+								For:   DurationPointer("15m"),
 								Labels: map[string]string{
 									"namespace": "default",
 									"name":      "test",
@@ -273,7 +273,7 @@ var _ = Describe("ServiceLevelObjective Controller", func() {
 							{
 								Alert: "SLOErrorBudgetBurn",
 								Expr:  intstr.FromString(`slo:burnrate{window="2h", id="test-default-availability"} > (2 * (1-0.9)) and slo:burnrate{window="1d", id="test-default-availability"} > (2 * (1-0.9))`),
-								For:   monitoringv1.DurationPointer("1h"),
+								For:   DurationPointer("1h"),
 								Labels: map[string]string{
 									"namespace": "default",
 									"name":      "test",
@@ -286,7 +286,7 @@ var _ = Describe("ServiceLevelObjective Controller", func() {
 							{
 								Alert: "SLOErrorBudgetBurn",
 								Expr:  intstr.FromString(`slo:burnrate{window="6h", id="test-default-availability"} > (1 * (1-0.9)) and slo:burnrate{window="4d", id="test-default-availability"} > (1 * (1-0.9))`),
-								For:   monitoringv1.DurationPointer("3h"),
+								For:   DurationPointer("3h"),
 								Labels: map[string]string{
 									"namespace": "default",
 									"name":      "test",
