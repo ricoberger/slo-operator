@@ -1,38 +1,24 @@
+# yaml-language-server: $schema=https://golangci-lint.run/jsonschema/golangci.jsonschema.json
+---
 version: "2"
-run:
-  modules-download-mode: readonly
 linters:
   default: none
   enable:
-    - dupl
-    - errcheck
-    - ginkgolinter
-    - goconst
-    - gocyclo
+    - bodyclose
+    - gosec
     - govet
     - ineffassign
-    - misspell
-    - nakedret
     - noctx
-    - revive
     - staticcheck
-    - unconvert
-    - unparam
     - unused
-  settings:
-    revive:
-      rules:
-        - name: comment-spacings
+    - whitespace
   exclusions:
     generated: lax
-    rules:
-      - linters:
-          - dupl
-        path: internal/*
-    paths:
-      - third_party$
-      - builtin$
-      - examples$
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
 formatters:
   enable:
     - gofmt
@@ -41,9 +27,3 @@ formatters:
     goimports:
       local-prefixes:
         - github.com/ricoberger/slo-operator
-  exclusions:
-    generated: lax
-    paths:
-      - third_party$
-      - builtin$
-      - examples$
