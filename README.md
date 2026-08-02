@@ -1,5 +1,9 @@
 # SLO Operator
 
+> [!CAUTION]
+>
+> The SLO Operator is deprecated and will not receive any further updates.
+
 The SLO Operator is a Kubernetes Operator that can be used to manage Service
 Level Objectives for services. The SLO Operator allows users to define
 `ServiceLevelObjectives` CustomResources, to generate all Prometheus rules and
